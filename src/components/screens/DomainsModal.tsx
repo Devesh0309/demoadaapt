@@ -161,7 +161,7 @@ const DomainsModal: React.FC<DomainsModalProps> = ({ onClose, onDone, selectedDo
               <div className="flex justify-between items-start">
                 <div>
                   <h2 className="text-xl font-bold">Select Data Sources</h2>
-                  <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>Choose domains for the AI to search.</p>
+                  <p className={`text-sm ${isDarkMode ? 'text-gray-400' : 'text-gray-500'} mt-1`}>Choose departments for the AI to search.</p>
                 </div>
                 <button 
                   onClick={onClose} 

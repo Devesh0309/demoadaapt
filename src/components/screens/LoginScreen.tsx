@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, PlayCircle } from "lucide-react"; // Added PlayCircle icon
 // Note: Ensure the path and component name for your logo are correct.
 // If you don't have this component, you can replace it with a simple <img> or text.
 import { AdaaptLogo } from "../AdaabtLogo";
@@ -7,7 +7,8 @@ import { AdaaptLogo } from "../AdaabtLogo";
 // A placeholder for your logo if the import is not available.
 
 
-export default function AuthScreen({ onLogin, onGuestLogin, inviteToken }) {
+// ✅ UPDATED: Added onDemoLogin to props
+export default function AuthScreen({ onLogin, onGuestLogin, onDemoLogin, inviteToken }) {
   const [authMode, setAuthMode] = useState('login'); // 'login' or 'signup'
 
   const handleLoginSuccess = () => {
@@ -51,6 +52,7 @@ export default function AuthScreen({ onLogin, onGuestLogin, inviteToken }) {
               <LoginView
                 onLoginSuccess={handleLoginSuccess}
                 onGuestLogin={onGuestLogin}
+                onDemoLogin={onDemoLogin} // ✅ Pass down the prop
                 onSwitchToSignup={() => setAuthMode("signup")}
               />
             ) : (
@@ -90,7 +92,8 @@ export default function AuthScreen({ onLogin, onGuestLogin, inviteToken }) {
 }
 
 
-function LoginView({ onLoginSuccess, onGuestLogin, onSwitchToSignup }) {
+// ✅ UPDATED: Added onDemoLogin to props
+function LoginView({ onLoginSuccess, onGuestLogin, onDemoLogin, onSwitchToSignup }) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -243,13 +246,26 @@ function LoginView({ onLoginSuccess, onGuestLogin, onSwitchToSignup }) {
             <div className="flex-grow border-t border-gray-200"></div>
           </div>
 
-          <button
-            type="button"
-            onClick={onGuestLogin}
-            className="w-full text-base h-12 bg-white text-gray-700 font-bold rounded-lg border-2 border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-all duration-300"
-          >
-            Continue as Guest
-          </button>
+          {/* ✅ UPDATED: Added Flex container for Guest and Demo buttons */}
+          <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={onGuestLogin}
+                className="flex-1 text-base h-12 bg-white text-gray-700 font-bold rounded-lg border-2 border-gray-300 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-400 transition-all duration-300"
+              >
+                Guest Login
+              </button>
+              
+              {/* ✅ NEW: Demo Button */}
+              <button
+                type="button"
+                onClick={onDemoLogin}
+                className="flex-1 flex items-center justify-center gap-2 text-base h-12 bg-indigo-50 text-indigo-700 font-bold rounded-lg border-2 border-indigo-200 hover:bg-indigo-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-400 transition-all duration-300"
+              >
+                <PlayCircle className="w-5 h-5" />
+                Demo
+              </button>
+          </div>
         </div>
       </form>
     </div>
