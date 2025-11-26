@@ -706,7 +706,7 @@ const HomeAskAIScreen: React.FC<HomeAskAIScreenProps> = ({ onLogout }) => {
                             <motion.div key="welcome-view" exit={{ opacity: 0, scale: 0.95 }} transition={{ duration: 0.3 }}>
                               <div className="text-center py-4 md:py-8">
                                 <div className="flex items-center justify-center gap-3 mb-4">
-                                  <div className="inline-block p-2 rounded-full bg-[#e0f2fe] text-[#1e293b]">
+                                  <div className="inline-block p-2 rounded-full text-[#1e293b]">
                                     {greeting.icon}
                                   </div>
                                   <p className="text-lg font-semibold text-[#64748b]">{greeting.text}</p>

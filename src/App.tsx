@@ -222,6 +222,33 @@ export default function App() {
     }
   };
 
+  // ✅ NEW: Handle Demo Login
+  const handleDemoLogin = () => {
+    setIsLoading(true);
+    setLoadingMessage('Initializing Demo Environment...');
+
+    // Simulate API delay
+    setTimeout(() => {
+        // Set fake auth state
+        setIsAuthenticated(true);
+        setIsFirstLogin(false);
+        localStorage.setItem('hasCompletedSetup', 'true');
+        
+        // Set dummy variables
+        setPrototypeVars({
+            current_dataset: 'Demo — Sample Data',
+            query_text: '',
+            selected_user: 'Demo User',
+            is_admin: false,
+        });
+
+        // Skip directly to HomeAskAIScreen
+        setOnboardingStep('home-ask-ai');
+        setIsLoading(false);
+        toast.success("Welcome to the Interactive Demo!");
+    }, 1000);
+  };
+
   const handleLogout = () => {
     setIsLoading(true);
     setLoadingMessage('Signing you out...');
@@ -349,10 +376,16 @@ export default function App() {
         case 'auth':
           return (
             <ScreenTransition isVisible={!isLoading} direction={direction}>
-              <AuthScreen onLogin={handleLogin} onGuestLogin={handleGuestLogin} inviteToken={inviteToken} />
+              {/* ✅ UPDATED: Passed onDemoLogin prop */}
+              <AuthScreen 
+                onLogin={handleLogin} 
+                onGuestLogin={handleGuestLogin} 
+                onDemoLogin={handleDemoLogin} 
+                inviteToken={inviteToken} 
+              />
             </ScreenTransition>
           );
-        case 'quickstart': // This case is now effectively unused but kept for structural integrity
+        case 'quickstart': 
           return (
             <ScreenTransition isVisible={!isLoading} direction={direction}>
               <QuickStartScreen onSetupComplete={handleSetupFinished} onLogout={handleLogout} />
@@ -377,7 +410,13 @@ export default function App() {
         default:
           return (
             <ScreenTransition isVisible={!isLoading} direction="right">
-              <AuthScreen onLogin={handleLogin} onGuestLogin={handleGuestLogin} inviteToken={inviteToken} />
+              {/* ✅ UPDATED: Passed onDemoLogin prop here as well for safety */}
+              <AuthScreen 
+                onLogin={handleLogin} 
+                onGuestLogin={handleGuestLogin} 
+                onDemoLogin={handleDemoLogin} 
+                inviteToken={inviteToken} 
+              />
             </ScreenTransition>
           );
       }
